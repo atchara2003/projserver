@@ -1,12 +1,26 @@
 <template>
-  <div>
+  <div class="create-user-container">
     <h1>Create User</h1>
-    <form v-on:submit.prevent = "createUser">
-      <div>name: <input type="text" v-model="user.name"></div>
-      <div>lastname: <input type="text" v-model="user.lastname"></div>
-      <div>email: <input type="text" v-model="user.email"></div>
-      <div>password: <input type="password" v-model="user.password"></div>
-      <div><button type="submit">create user</button></div>
+    <form v-on:submit.prevent="createUser" class="user-form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="user.name" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" v-model="user.lastname" placeholder="Enter your last name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="user.email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="user.password" placeholder="Enter your password">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Create User</button>
+      </div>
     </form>
   </div>
 </template>
@@ -14,7 +28,7 @@
 <script>
 import UsersService from '../../services/UsersService';
 export default {
-  data(){
+  data() {
     return {
       user: {
         name: '',
@@ -25,21 +39,78 @@ export default {
       }
     }
   },
-  methods:{
-    async createUser(){
-      try{
+  methods: {
+    async createUser() {
+      try {
         await UsersService.post(this.user);
         this.$router.push('/users');
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
-      
     }
   }
-
 }
 </script>
 
-<style>
+<style scoped>
+.create-user-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #f0f8ff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
 
+h1 {
+  text-align: center;
+  color: #2980b9;
+  margin-bottom: 20px;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2980b9;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-submit {
+  background-color: #2980b9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background-color: #3498db;
+}
 </style>

@@ -4,7 +4,6 @@
       <ul class="nav">
         <li><router-link :to="{ name: 'blogs' }">บันทึกการเดินทาง</router-link></li>
         <li><router-link :to="{ name: 'users' }">ผู้ใช้งาน</router-link></li>
-        <li><router-link :to="{ name: 'comments' }">ความคิดเห็น</router-link></li>
         <li v-if="isLogin()"><a href="#" v-on:click="logout">ออกจากระบบ</a></li>
         <li v-else><router-link :to="{ name: 'login' }">เข้าสู่ระบบ</router-link></li>
       </ul>
