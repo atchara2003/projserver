@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="header-container">
     <div class="nv-navbar">
       <ul class="nav">
-        <li><router-link :to="{ name: 'blogs' }">Blogs</router-link></li>
-        <li><router-link :to="{ name: 'users' }">Users</router-link></li>
-        <li><router-link :to="{ name: 'comments' }">Comments</router-link></li>
-        <!-- if isLogin is true, show logout menu. otherwise, show login menu-->
-        <li><router-link :to="{ name: 'login' }">Login</router-link></li>  
+        <li><router-link :to="{ name: 'blogs' }">บันทึกการเดินทาง</router-link></li>
+        <li><router-link :to="{ name: 'users' }">ผู้ใช้งาน</router-link></li>
+        <li><router-link :to="{ name: 'comments' }">ความคิดเห็น</router-link></li>
+        <li v-if="isLogin()"><a href="#" v-on:click="logout">ออกจากระบบ</a></li>
+        <li v-else><router-link :to="{ name: 'login' }">เข้าสู่ระบบ</router-link></li>
       </ul>
     </div>
   </div>
 </template>
+
+
 <script>
 
 export default {
@@ -27,37 +29,69 @@ export default {
 };
 </script>
 <style scoped>
-.nv-navbar {
-  background-color: palegoldenrod;
-  width: 100%;
-  height: 20px;
-  padding: 10px 0px 10px 0px;
+/* ปรับแต่ง header ให้อยู่ตรงกลางและดูสะอาด */
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('https://cdn.pixabay.com/photo/2021/11/21/21/14/mountain-6815304_1280.jpg') no-repeat center center; /* เพิ่มภาพพื้นหลัง */
+  background-size: cover;
+  height: 250px; /* กำหนดความสูงให้สูงขึ้นเพื่อให้ดูดี */
+  color: white;
 }
+
+.nv-navbar {
+  position: fixed; /* ยึด navbar ไว้ที่ขอบบน */
+  top: 0;
+  left: 0;
+  width: 100%; /* ให้ความกว้างเต็มหน้าจอ */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .nv-navbar .nav {
   list-style: none;
+  display: flex;
+  justify-content: space-around; /* ให้รายการกระจายตัวให้เต็มพื้นที่ */
   margin: 0;
   padding: 0;
-  float: left;
 }
+
 .nv-navbar .nav li {
-  float: left;
+  margin: 0;
 }
+
 .nv-navbar .nav li a {
-  padding: 10px;
+  color: white;
   text-decoration: none;
-  color: gray;
+  font-size: 18px;
   font-weight: bold;
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
 }
+
 .nv-navbar .nav li a:hover {
-  padding: 10px;
-  text-decoration: none;
-  color: darkslategrey;
+  background-color: rgba(255, 255, 255, 0.3); /* ทำให้มีสีขาวอ่อนเมื่อ hover */
 }
+
 .nv-navbar .nav li a.router-link-active {
-  background-color: gold;
-  color: darkslategrey;
+  background-color: #FFD700; /* สีทองเมื่อเลือกเมนู */
+  color: black;
 }
-.clearfix {
-  clear: left;
+
+@media (max-width: 768px) {
+  .nv-navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+  .nv-navbar .nav {
+    flex-direction: column;
+  }
+  .nv-navbar .nav li {
+    margin-bottom: 10px;
+  }
 }
 </style>
+
