@@ -161,4 +161,11 @@ export default {
   background-color: #dc3545;
   color: white;
 }
+.thumbnail-pic img {
+  max-width: 100%;
+  height: 300px;
+  border-radius: 5px;
+  object-fit: cover; /* ปรับขนาดภาพให้เหมาะสมในกรอบ */
+}
+
 </style>

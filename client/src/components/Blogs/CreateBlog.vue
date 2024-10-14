@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Create Blog</h1>
+    <h1>เพิ่มรายการ</h1>
     <form v-on:submit.prevent="createBlog">
       <p>
         ชื่อสถานที่:
@@ -334,54 +334,86 @@ export default {
 };
 </script>
 <style scoped>
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lemonchiffon;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-.input-file {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: khaki; /* when mouse over to the drop zone, change color 
-*/
-}
-
-.dropbox p {
-  font-size: 1.2em;
+h1 {
+  font-family: 'Prompt', sans-serif;
+  color: #4CAF50;
   text-align: center;
-  padding: 50px 0;
 }
-ul.pictures {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  float: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
+
+form {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
 }
-ul.pictures li {
-  float: left;
+
+p {
+  font-family: 'Prompt', sans-serif;
+  margin-bottom: 15px;
 }
-ul.pictures li img {
-  max-width: 180px;
-  margin-right: 20px;
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
 }
-.clearfix {
-  clear: both;
+
+textarea {
+  height: 100px;
 }
-/* thumbnail */
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Prompt', sans-serif;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
 .thumbnail-pic img {
-  width: 200px;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropbox {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-family: 'Prompt', sans-serif;
+  color: #999;
+}
+
+.pictures {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pictures li {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 </style>

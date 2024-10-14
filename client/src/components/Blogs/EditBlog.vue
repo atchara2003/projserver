@@ -1,58 +1,75 @@
 <template>
-  <div>
-    <h1>แก้ไข</h1>
-    <form v-on:submit.prevent="editBlog">
-      <p>ชื่อสถานที่: <input type="text" v-model="blog.title" /></p>
+  <div class="container">
+    <h1 class="title">แก้ไขการเดินทาง</h1>
+    <form v-on:submit.prevent="editBlog" class="form-edit">
+      <div class="form-group">
+        <label>ชื่อสถานที่:</label>
+        <input type="text" v-model="blog.title" class="input-field" />
+      </div>
+
       <transition name="fade">
         <div class="thumbnail-pic" v-if="blog.thumbnail != 'null'">
           <img :src="BASE_URL + blog.thumbnail" alt="thumbnail" />
         </div>
       </transition>
-      <form enctype="multipart/form-data" novalidate>
-        <div class="dropbox">
-          <input
-            type="file"
-            multiple
-            :name="uploadFieldName"
-            :disabled="isSaving"
-            @change="
-              filesChange($event.target.name, $event.target.files);
-              fileCount = $event.target.files.length;
-            "
-            accept="image/*"
-            class="input-file"
-          />
-          <!-- <p v-if="isInitial || isSuccess"> -->
-          <p v-if="isInitial">
-            Drag your file(s) here to begin<br />
-            or click to browse
-          </p>
-          <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
-          <p v-if="isSuccess">Upload Successful.</p>
-        </div>
-      </form>
+
+      <div class="form-group">
+        <label>อัปโหลดรูปภาพการเดินทาง:</label>
+        <form enctype="multipart/form-data" novalidate>
+          <div class="dropbox">
+            <input
+              type="file"
+              multiple
+              :name="uploadFieldName"
+              :disabled="isSaving"
+              @change="
+                filesChange($event.target.name, $event.target.files);
+                fileCount = $event.target.files.length;
+              "
+              accept="image/*"
+              class="input-file"
+            />
+            <p v-if="isInitial">ลากไฟล์ของคุณที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+            <p v-if="isSaving">กำลังอัปโหลด {{ fileCount }} ไฟล์...</p>
+            <p v-if="isSuccess">อัปโหลดสำเร็จ</p>
+          </div>
+        </form>
+      </div>
+
       <transition-group tag="ul" class="pictures">
-        <li v-for="picture in pictures" v-bind:key="picture.id">
+        <li v-for="picture in pictures" v-bind:key="picture.id" class="picture-item">
           <img
-            style="margin-bottom: 5px"
             :src="BASE_URL + picture.name"
             alt="picture image"
+            class="uploaded-image"
           />
-          <br />
-          <button v-on:click.prevent="useThumbnail(picture.name)">
-            Thumbnail
-          </button>
-          <button v-on:click.prevent="delFile(picture)">Delete</button>
+          <div class="button-group">
+            <button class="btn" v-on:click.prevent="useThumbnail(picture.name)">
+              ตั้งเป็นรูปภาพปก
+            </button>
+            <button class="btn btn-danger" v-on:click.prevent="delFile(picture)">
+              ลบ
+            </button>
+          </div>
         </li>
       </transition-group>
-      <div class="clearfix"></div>
-      
-      <p>วันที่ไป: <input type="text" v-model="blog.category" /></p>
-      <p> รายละเอียดกิจกรรม: <input type="text" v-model="blog.status" /></p>
-      <p>
-        <button type="submit">update blog</button>
-        <button v-on:click="navigateTo('/blogs')">กลับ</button>
-      </p>
+
+      <div class="form-group">
+        <label>วันที่เดินทาง:</label>
+        <input type="date" v-model="blog.category" class="input-field" />
+      </div>
+
+      <div class="form-group">
+        <label>รายละเอียดกิจกรรม:</label>
+        <input type="text" v-model="blog.status" class="input-field" />
+      </div>
+
+      <div class="form-group button-container">
+        <button type="submit" class="btn btn-primary">อัปเดต</button>
+        <button v-on:click="navigateTo('/blogs')" class="btn btn-secondary">
+          กลับ
+        </button>
+      </div>
     </form>
   </div>
 </template>
@@ -341,54 +358,116 @@ export default {
 };
 </script>
 <style scoped>
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #d1d1d1;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #628391;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .dropbox {
-  outline: 2px dashed grey; /* the dash box */
+  outline: 2px dashed grey;
   outline-offset: -10px;
   background: lemonchiffon;
   color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
+  padding: 10px;
+  min-height: 200px;
   position: relative;
   cursor: pointer;
-}
-.input-file {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
+  margin-bottom: 15px;
 }
 
 .dropbox:hover {
-  background: khaki; /* when mouse over to the drop zone, change color 
-*/
+  background: khaki;
 }
 
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
+.input-file {
+  opacity: 0;
+  width: 100%;
+  height: 200px;
+  position: absolute;
 }
-ul.pictures {
+
+.pictures {
   list-style: none;
   padding: 0;
   margin: 0;
-  float: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
-ul.pictures li {
-  float: left;
-}
-ul.pictures li img {
-  max-width: 180px;
+
+.picture-item {
   margin-right: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
+
+.uploaded-image {
+  max-width: 180px;
+  margin-bottom: 5px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
 .clearfix {
   clear: both;
 }
-/* thumbnail */
+
 .thumbnail-pic img {
   width: 200px;
+  margin-bottom: 15px;
 }
 </style>
