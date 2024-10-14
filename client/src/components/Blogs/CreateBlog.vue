@@ -3,7 +3,7 @@
     <h1>Create Blog</h1>
     <form v-on:submit.prevent="createBlog">
       <p>
-        title:
+        ชื่อสถานที่:
         <input type="text" v-model="blog.title" />
       </p>
       <transition name="fade">
@@ -51,21 +51,13 @@
         </transition-group>
         <div class="clearfix"></div>
       </div>
+      
       <p>
-        <strong>content:</strong>
-      </p>
-      <vue-ckeditor
-        v-model.lazy="blog.content"
-        :config="config"
-        @blur="onBlur($event)"
-        @focus="onFocus($event)"
-      />
-      <p>
-        category:
-        <input type="text" v-model="blog.category" />
+        วันที่ไป:
+        <input type="date" v-model="blog.category" />
       </p>
       <p>
-        status:
+        รายละเอียดกิจกรรม:
         <input type="text" v-model="blog.status" />
       </p>
       <p>
@@ -102,7 +94,7 @@ export default {
         pictures: "null",
         content: "",
         category: "",
-        status: "saved",
+        status: "",
       },
       config: {
         toolbar: [

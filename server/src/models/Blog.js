@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         thumbnail: DataTypes.STRING,
         pictures: DataTypes.TEXT,
         content: DataTypes.TEXT,
-        category: DataTypes.STRING,     
+        category: DataTypes.TEXT,     
         status: DataTypes.STRING,
     })
     return Blog
